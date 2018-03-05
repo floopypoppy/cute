@@ -26,15 +26,11 @@ def covmap(ma,mb):
             if delta_x>=0 and delta_y>=0:
                 slidea = ma[delta_x:,delta_y:].flatten()
                 slideb = mb[:l-delta_x,:l-delta_y].flatten()
-            inda = np.nonzero(slidea)[0]
-            indb = np.nonzero(slideb)[0]
-            comind = list(set(inda)&set(indb))
-            if comind == []:
-                covmtx[l-1+delta_x,l-1+delta_y] = 0
-            else :
+            if size(slidea)>1:
                 temp = np.stack((slidea,slideb)) 
                 covmtx[l-1+delta_x,l-1+delta_y] = cov(temp)[0,1]
-
+            else :
+                covmtx[l-1+delta_x,l-1+delta_y] = 0
 #    covmtx /= covmtx.max()                   
     return covmtx
               
